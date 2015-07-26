@@ -1,0 +1,31 @@
+#File System
+projectFolder: /opt/projects
+
+#Docker Compose
+docker:
+  dockerComposeFolder: /usr/local/bin
+  certificatesFolder: /certs
+  dockerEndpoint: ${env.BENCHFLOW_SWARM_ENDPOINT}
+  dockerTLSVerify: ${env.BENCHFLOW_SWARM_TLSVERIFY!1} #Enables by default
+
+#Dropwizard
+server:
+  type: default
+  applicationConnectors:
+    - type: http
+      port: 8080
+      bindHost: 127.0.0.1 # only bind to loopback
+  adminConnectors:
+    - type: http
+      port: 8081
+      bindHost: 127.0.0.1 # only bind to loopback
+     
+logging:
+  level: INFO
+  loggers:
+    io.dropwizard: INFO
+  appenders:
+    - type: console
+      threshold: ALL
+      timeZone: UTC
+      target: stdout
