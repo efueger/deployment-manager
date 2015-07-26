@@ -14,6 +14,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.commons.exec.ExecuteException;
 import org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -21,6 +22,7 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
 import cloud.benchflow.compose.configurations.DockerConfiguration;
+import cloud.benchflow.compose.docker.DockerCompose;
 import cloud.benchflow.compose.exceptions.FileCreationException;
 import cloud.benchflow.compose.responses.Up;
 
@@ -38,7 +40,7 @@ public class Projects {
 	}
 
 	/**
-	 * Save a deployment descriptor of a multi-container application described in a docker-compse.yml and in a benchflow-compose.yml
+	 * Save a deployment descriptor of a multi-container application described in a docker-compose.yml and in a benchflow-compose.yml
 	 * 
 	 * 
 	 * @param experimentId
@@ -71,20 +73,27 @@ public class Projects {
 
 
 	/**
-	 * Deploys a multi-container application described in a docker-compse.yml and in a benchflow-compose.yml
+	 * Deploys a multi-container application described in a docker-compose.yml and in a benchflow-compose.yml
 	 * 
 	 * 
 	 * @param projectnameid
+	 * @throws IOException 
+	 * @throws ExecuteException 
 	 *     
 	 */
 	@PUT
 	@Path("{experimentId}/up") 
 	@Produces(MediaType.APPLICATION_JSON)
-	public Up up(@PathParam("experimentId") String experimentId) {
+	public Up up(@PathParam("experimentId") String experimentId) throws ExecuteException, IOException {
+		//TODO: enable also benchflow-compose
+		
 		//TODO: implement
 		//Verify that the experimentId folder exists
 		
 		//Call the DockerCompose wrapper to run the up method
+		//TODO: test
+		DockerCompose dockerCompose = new DockerCompose(this.dockerConf);
+		dockerCompose.up(experimentId);
 
 		return null;
 	}

@@ -1,0 +1,11 @@
+#%RAML 0.8
+---
+title: benchflow-compose API
+version: v1
+protocols: [ HTTP ]
+mediaType: application/json
+baseUri: http://{ip}/{version}
+baseUriParameters:
+ ip:
+   displayName: Service IP
+   type: string
