@@ -45,6 +45,11 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-exec</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>io.dropwizard</groupId>
+			<artifactId>dropwizard-testing</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -170,6 +175,11 @@
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-exec</artifactId>
 				<version>${commons.exec.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.dropwizard</groupId>
+				<artifactId>dropwizard-testing</artifactId>
+				<version>${dropwizard.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
