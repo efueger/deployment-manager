@@ -5,6 +5,6 @@
     <artifactId>compose</artifactId>
     <version>0.0.1</version>
   </parent>
-  <artifactId>api</artifactId>
   <groupId>cloud.benchflow.compose</groupId>
+  <artifactId>api</artifactId>
 </project>

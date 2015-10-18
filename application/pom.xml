@@ -6,6 +6,7 @@
 		<artifactId>compose</artifactId>
 		<version>0.0.1</version>
 	</parent>
+	<groupId>cloud.benchflow.compose</groupId>
 	<artifactId>application</artifactId>
 	<properties>
 		<jersey.multipart.version>2.19</jersey.multipart.version>
@@ -55,5 +56,4 @@
 			</plugin>
 		</plugins>
 	</build>
-	<groupId>cloud.benchflow.compose</groupId>
 </project>
