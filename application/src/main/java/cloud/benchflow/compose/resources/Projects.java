@@ -22,15 +22,17 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
 import cloud.benchflow.compose.configurations.DockerConfiguration;
-import cloud.benchflow.compose.docker.DockerCompose;
+import cloud.benchflow.compose.docker.DockerComposeWrapper;
 import cloud.benchflow.compose.exceptions.FileCreationException;
+import cloud.benchflow.compose.responses.Rm;
+import cloud.benchflow.compose.responses.Stop;
 import cloud.benchflow.compose.responses.Up;
 
 @Path("projects")
 @Produces(MediaType.APPLICATION_JSON)
 public class Projects {
 
-	private String projectFolder;
+	private String projectFolder = null;
 	private DockerConfiguration dockerConf;
 
 	@Inject
@@ -66,8 +68,9 @@ public class Projects {
 		//Save files in the experimentId folder
 		saveFileFromInputStream(experimentId, dockerComposeStream, "docker-compose.yml");
 		saveFileFromInputStream(experimentId, benchflowComposeStream, "benchflow-compose.yml");
+		
+		//TODO: Generate the transformed docker-compose.yml by using the abstractions offered by benchflow-compose
 
-		System.out.println(dockerComposeStream);
 
 	}
 
@@ -85,15 +88,58 @@ public class Projects {
 	@Path("{experimentId}/up") 
 	@Produces(MediaType.APPLICATION_JSON)
 	public Up up(@PathParam("experimentId") String experimentId) throws ExecuteException, IOException {
-		//TODO: enable also benchflow-compose
 		
 		//TODO: implement
 		//Verify that the experimentId folder exists
 		
+		//TODO: enable also benchflow-compose, for now I'm testing using what the output of the benchflow-compose abstraction should be
+		//should be on the docker-compose.yml file
+		
 		//Call the DockerCompose wrapper to run the up method
-		//TODO: test
-		DockerCompose dockerCompose = new DockerCompose(this.dockerConf);
-		dockerCompose.up(experimentId);
+		java.nio.file.Path projectFolder = Paths.get(this.projectFolder.toString(),experimentId);
+		DockerComposeWrapper dockerCompose = new DockerComposeWrapper(this.dockerConf);
+		dockerCompose.up(projectFolder.toString(),experimentId);
+
+		//TODO: correclty handle the response
+		return null;
+	}
+	
+	//TODO: add the run command API
+	
+	//TODO: document
+	@PUT
+	@Path("{experimentId}/stop") 
+	@Produces(MediaType.APPLICATION_JSON)
+	public Stop stop(@PathParam("experimentId") String experimentId) throws ExecuteException, IOException {
+
+		//TODO: implement
+		//Verify that the experimentId folder exists
+
+		//Call the DockerCompose wrapper to run the stop method
+		java.nio.file.Path projectFolder = Paths.get(this.projectFolder.toString(),experimentId);
+		DockerComposeWrapper dockerCompose = new DockerComposeWrapper(this.dockerConf);
+		dockerCompose.stop(projectFolder.toString(),experimentId);
+
+		return null;
+	}
+	
+	//TODO: document
+	@PUT
+	@Path("{experimentId}/rm") 
+	@Produces(MediaType.APPLICATION_JSON)
+	public Rm rm(@PathParam("experimentId") String experimentId) throws ExecuteException, IOException {
+		
+		//TODO: implement
+		//Verify that the experimentId folder exists
+
+		//Call the DockerCompose wrapper to run the rm method
+		
+		//The services have to be stopped before removal
+		stop(experimentId);
+		
+		java.nio.file.Path projectFolder = Paths.get(this.projectFolder.toString(),experimentId);
+		DockerComposeWrapper dockerCompose = new DockerComposeWrapper(this.dockerConf);
+		dockerCompose.rm(projectFolder.toString(),experimentId);
 
 		return null;
 	}

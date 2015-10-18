@@ -1,53 +1,52 @@
 package cloud.benchflow.compose.resources;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import java.io.IOException;
+import java.io.InputStream;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.core.Response;
-
-import org.glassfish.jersey.client.JerseyClientBuilder;
-import org.junit.ClassRule;
-import org.junit.Rule;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import cloud.benchflow.compose.BenchflowComposeApplication;
-import cloud.benchflow.compose.configurations.BenchflowComposeConfiguration;
 import cloud.benchflow.compose.configurations.DockerConfiguration;
-import io.dropwizard.testing.ResourceHelpers;
-import io.dropwizard.testing.junit.DropwizardAppRule;
-import io.dropwizard.testing.junit.ResourceTestRule;
+import cloud.benchflow.compose.docker.DockerComposeUtils;
 
 public class ProjectsTest {
 
-	@Rule
-	public TemporaryFolder testFolder = new TemporaryFolder();
+	private static final DockerConfiguration configuration = new DockerConfiguration();
+	private TemporaryFolder testFolder = new TemporaryFolder();
+	private String sourceFolder = "/projects/examples/wordpress";
+	private Projects project;
 	
-	//Run the service (useful mainly for integration testing)
-//	@ClassRule
-//    public static final DropwizardAppRule<BenchflowComposeConfiguration> RULE =
-//            new DropwizardAppRule<BenchflowComposeConfiguration>(BenchflowComposeApplication.class, ResourceHelpers.resourceFilePath("configuration.yaml"));
+	//TODO: add testing of the methods that calls docker-compose, by stubbing the service interaction with actual REST call, and not direclty calling the method of the resource
 	
-	//TODO: add testing of the methods that calls docker-compose, by stubbing the service interaction
+	//TODO: improve, currently I direclty call the methods I'm interested to test
+	@Before
+	public void setup() throws IOException {
 
-//	@Test
-//	public void testDeploymentDescriptor() {
+		DockerComposeUtils.configure(configuration);
 		
-//		String folder = testFolder.newFolder("experimentId").getAbsolutePath();
-
-//		ResourceTestRule resources = ResourceTestRule.builder()
-//				.addResource(new Projects(folder, null))
-//				.build();
-
-		//TODO: add testing of correct upload of files
-//		assertThat(resources.client().target("/projects/experimentId/deploymentDescriptor").request())
-
-//	}
-
-//	@Test
-//	public void testUp() {
+		testFolder.create();
 		
-		//TODO: the following is custom testing code, implement the real one!
+		//Create a test project
+		project = new Projects(testFolder.getRoot().toString(), configuration);
 		
-//	}
+	}
+
+	@After
+	public void tearDown() { 
+		testFolder.delete();
+	}
+	
+	@Test
+	public void testDeploymentDescriptor() {
+		
+		String experimentId = "wordpress";
+		
+		InputStream dockerCompose = getClass().getResourceAsStream(sourceFolder + "/docker-compose.yml");
+		InputStream benchflowCompose = getClass().getResourceAsStream(sourceFolder + "/benchflow-compose.yml");
+
+		project.deploymentDescriptor(experimentId, dockerCompose, benchflowCompose);
+
+	}
+
 }

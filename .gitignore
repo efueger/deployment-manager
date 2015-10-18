@@ -1,1 +1,5 @@
 /target/
+
+//Eclipse settings
+.settings
+application/src/test/resources/configuration.properties

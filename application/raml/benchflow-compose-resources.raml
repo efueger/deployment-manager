@@ -1,6 +1,18 @@
 #%RAML 0.8
 title: "#See: benchflow-compose.raml"
 baseUri: "#See: benchflow-compose.raml"
+/projects/{experimentId}/rm: 
+  put: 
+    responses: 
+      200: 
+        body: 
+          application/json: 
+/projects/{experimentId}/stop: 
+  put: 
+    responses: 
+      200: 
+        body: 
+          application/json: 
 /projects/{experimentId}/up: 
   put: 
     responses: 

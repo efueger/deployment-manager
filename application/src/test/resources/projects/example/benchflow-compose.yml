@@ -1,5 +1,0 @@
-camunda:
-  host: grid
-
-db:
-  host: bull
