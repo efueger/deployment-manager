@@ -8,9 +8,7 @@ ENV BENCHFLOW_COMPOSE_VERSION v-dev
 #Install docker-compose
 RUN apk --update add curl && \
     curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-Linux-x86_64 > /usr/local/bin/docker-compose && \
-    chmod +x /usr/local/bin/docker-compose && \
-	# Get benchflow-compose
-    wget -q --no-check-certificate -O /app/benchflow-compose.jar https://github.com/benchflow/spark-tasks-sender/releases/download/$BENCHFLOW_COMPOSE_VERSION/benchflow-compose.jar
+    chmod +x /usr/local/bin/docker-compose
 
 # Separate so that Docker can cache the Spark layer
 # Clean up
@@ -19,6 +17,10 @@ RUN apk del --purge curl && \
 
 COPY configuration.yml /app/
 
+COPY ./target/benchflow-compose.jar /app/
 COPY ./services/300-compose.conf /apps/chaperone.d/300-compose.conf
+
+#TODO: remove, it is for testing
+RUN touch /app/test.tpl
  
 EXPOSE 8080
