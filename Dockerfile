@@ -10,11 +10,9 @@ RUN apk --update add curl && \
     curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-Linux-x86_64 > /usr/local/bin/docker-compose && \
     chmod +x /usr/local/bin/docker-compose && \
 	# Get benchflow-compose
-    wget -q --no-check-certificate -O /app/benchflow-compose.jar https://github.com/benchflow/spark-tasks-sender/releases/download/$BENCHFLOW_COMPOSE_VERSION/benchflow-compose.jar
-
-# Separate so that Docker can cache the Spark layer
-# Clean up
-RUN apk del --purge curl && \
+    wget -q --no-check-certificate -O /app/benchflow-compose.jar https://github.com/benchflow/compose/releases/download/$BENCHFLOW_COMPOSE_VERSION/benchflow-compose.jar && \
+	# Clean up
+	apk del --purge curl && \
     rm -rf /var/cache/apk/*
 
 COPY configuration.yml /app/
