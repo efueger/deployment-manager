@@ -1,10 +1,10 @@
 #File System
-projectFolder: /opt/projects
+projectFolder: /app/projects
 
 #Docker Compose
 docker:
   dockerComposeFolder: /usr/local/bin
-  certificatesFolder: /certs
+  certificatesFolder: "/app"
   dockerEndpoint: ${env.BENCHFLOW_SWARM_ENDPOINT}
   dockerTLSVerify: ${env.BENCHFLOW_SWARM_TLSVERIFY!1} #Enables by default
 

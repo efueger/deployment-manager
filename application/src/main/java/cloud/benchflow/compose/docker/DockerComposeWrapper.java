@@ -44,8 +44,9 @@ public class DockerComposeWrapper {
 		Map<String,String> env = new HashMap<String,String>();
 
 		env.put("DOCKER_HOST", configuration.getDockerEndpoint());
-		env.put("DOCKER_TLS_VERIFY",configuration.getDockerTLSVerify());
-		env.put("DOCKER_CERT_PATH", configuration.getCertificatesFolder());
+		//TODO: remove, currenlty disabled for testing purposes
+//		env.put("DOCKER_TLS_VERIFY",configuration.getDockerTLSVerify());
+//		env.put("DOCKER_CERT_PATH", configuration.getCertificatesFolder());
 		env.put("COMPOSE_FILE", Paths.get(projectFolder,"docker-compose.yml").toAbsolutePath().toString());
 		env.put("COMPOSE_PROJECT_NAME", projectName);
 
@@ -107,6 +108,13 @@ public class DockerComposeWrapper {
 		System.out.println(errStr);
 
 		//Attach to logs to retrieve the logs and exit (when to exit???)
+		//TODO: remove, currenlty disabled for testing purposes
+		try {
+			Thread.sleep(30000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 
 		return projectFolder;
@@ -129,8 +137,10 @@ public class DockerComposeWrapper {
 		Map<String,String> env = new HashMap<String,String>();
 
 		env.put("DOCKER_HOST", configuration.getDockerEndpoint());
-		env.put("DOCKER_TLS_VERIFY","1");
-		env.put("DOCKER_CERT_PATH", configuration.getCertificatesFolder());
+		//TODO: remove, currenlty disabled for testing purposes
+//		env.put("DOCKER_TLS_VERIFY",configuration.getDockerTLSVerify());
+		//TODO: remove, currenlty disabled for testing purposes
+//		env.put("DOCKER_CERT_PATH", configuration.getCertificatesFolder());
 		env.put("COMPOSE_FILE", Paths.get(projectFolder,"docker-compose.yml").toAbsolutePath().toString());
 		env.put("COMPOSE_PROJECT_NAME", projectName);
 
@@ -210,13 +220,16 @@ public class DockerComposeWrapper {
 		//		cmdLine.addArgument("--verbose"); //TODO: testing, remove
 		cmdLine.addArgument("rm");
 		cmdLine.addArgument("-f");
+		cmdLine.addArgument("-v");
 
 		//build the env variables map we want to pass to docker-compose
 		Map<String,String> env = new HashMap<String,String>();
 
 		env.put("DOCKER_HOST", configuration.getDockerEndpoint());
-		env.put("DOCKER_TLS_VERIFY","1");
-		env.put("DOCKER_CERT_PATH", configuration.getCertificatesFolder());
+		//TODO: remove, currenlty disabled for testing purposes
+//		env.put("DOCKER_TLS_VERIFY",configuration.getDockerTLSVerify());
+		//TODO: remove, currenlty disabled for testing purposes
+//		env.put("DOCKER_CERT_PATH", configuration.getCertificatesFolder());
 		env.put("COMPOSE_FILE", Paths.get(projectFolder,"docker-compose.yml").toAbsolutePath().toString());
 		env.put("COMPOSE_PROJECT_NAME", projectName);
 
@@ -302,8 +315,10 @@ public class DockerComposeWrapper {
 		Map<String,String> env = new HashMap<String,String>();
 
 		env.put("DOCKER_HOST", configuration.getDockerEndpoint());
-		env.put("DOCKER_TLS_VERIFY","1");
-		env.put("DOCKER_CERT_PATH", configuration.getCertificatesFolder());
+		//TODO: remove, currenlty disabled for testing purposes
+//		env.put("DOCKER_TLS_VERIFY",configuration.getDockerTLSVerify());
+		//TODO: remove, currenlty disabled for testing purposes
+//		env.put("DOCKER_CERT_PATH", configuration.getCertificatesFolder());
 		env.put("COMPOSE_FILE", Paths.get(projectFolder,"docker-compose.yml").toAbsolutePath().toString());
 		env.put("COMPOSE_PROJECT_NAME", projectName);
 
@@ -390,8 +405,10 @@ public class DockerComposeWrapper {
 		Map<String,String> env = new HashMap<String,String>();
 
 		env.put("DOCKER_HOST", configuration.getDockerEndpoint());
-		env.put("DOCKER_TLS_VERIFY","1");
-		env.put("DOCKER_CERT_PATH", configuration.getCertificatesFolder());
+		//TODO: remove, currenlty disabled for testing purposes		
+//		env.put("DOCKER_TLS_VERIFY",configuration.getDockerTLSVerify());
+		//TODO: remove, currenlty disabled for testing purposes
+//		env.put("DOCKER_CERT_PATH", configuration.getCertificatesFolder());
 		env.put("COMPOSE_FILE", Paths.get(projectFolder,"docker-compose.yml").toAbsolutePath().toString());
 		env.put("COMPOSE_PROJECT_NAME", projectName);
 

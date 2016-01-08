@@ -180,7 +180,9 @@ public class Projects {
 				Files.createFile(outputFile);
 			}
 			//Save dataStream on fileName (overwriting the content of the file, if already present: PUT behaviour)
+			System.out.println(outputFile.toFile());
 			OutputStream out = new FileOutputStream(outputFile.toFile());
+			System.out.println(dataStream);
 			IOUtils.copy(dataStream, out);
 		} catch (IOException e) {
 			e.printStackTrace();

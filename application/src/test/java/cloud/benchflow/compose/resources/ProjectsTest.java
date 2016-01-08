@@ -14,7 +14,7 @@ public class ProjectsTest {
 
 	private static final DockerConfiguration configuration = new DockerConfiguration();
 	private TemporaryFolder testFolder = new TemporaryFolder();
-	private String sourceFolder = "/projects/examples/wordpress";
+	private String sourceFolder = "/projects/examples/camunda";
 	private Projects project;
 	
 	//TODO: add testing of the methods that calls docker-compose, by stubbing the service interaction with actual REST call, and not direclty calling the method of the resource

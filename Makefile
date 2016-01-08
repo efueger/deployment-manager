@@ -29,7 +29,8 @@ build_container_local:
 	rm target/benchflow-$(REPONAME).jar
 
 test_container_local:
-	#TODO
+	docker run -ti --rm -e "BENCHFLOW_SWARM_ENDPOINT=10.40.1.128:2376" -e "BENCHFLOW_SWARM_TLSVERIFY=0" -e "ENVCONSUL_CONSUL=195.176.181.55:8500" \
+	-p 8080:8080 --net="host" --name $(REPONAME) $(DOCKERIMAGENAME):$(VERSION)
 
 rm_container_local:
 	#TODO

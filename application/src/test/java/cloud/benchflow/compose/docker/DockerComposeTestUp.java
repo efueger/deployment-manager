@@ -14,8 +14,8 @@ public class DockerComposeTestUp {
 
 	private static final DockerConfiguration configuration = new DockerConfiguration();
 	private TemporaryFolder testFolder = new TemporaryFolder();
-	private String sourceFolder = "/projects/examples/wordpress";
-	private String projectName = "wordpress";
+	private String sourceFolder = "/projects/examples/camunda";
+	private String projectName = "camunda";
 
 	@Before
 	public void setup() throws IOException {
