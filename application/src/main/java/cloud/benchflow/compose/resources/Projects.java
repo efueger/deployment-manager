@@ -137,9 +137,12 @@ public class Projects {
 		//The services have to be stopped before removal
 		stop(experimentId);
 		
-		java.nio.file.Path projectFolder = Paths.get(this.projectFolder.toString(),experimentId);
+		java.nio.file.Path projectFolder = Paths.get(this.projectFolder,experimentId);
 		DockerComposeWrapper dockerCompose = new DockerComposeWrapper(this.dockerConf);
 		dockerCompose.rm(projectFolder.toString(),experimentId);
+
+		//remove projectFolder
+		Files.delete(projectFolder);
 
 		return null;
 	}
