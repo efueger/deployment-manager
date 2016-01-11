@@ -1,6 +1,8 @@
+/.idea
+/compose.iml
 /target/
 
-//Eclipse settings
+#Eclipse settings
 .settings
 .classpath
 api/.settings
@@ -8,5 +10,6 @@ api/.classpath
 application/.settings
 application/.classpath
 
-//Custom files
+#//Custom files
+
 application/src/test/resources/configuration.properties
