@@ -33,4 +33,4 @@ test_container_local:
 	-p 8080:8080 --net="host" --name $(REPONAME) $(DOCKERIMAGENAME):$(VERSION)
 
 rm_container_local:
-	#TODO
+	docker rm -f -v $(REPONAME)
