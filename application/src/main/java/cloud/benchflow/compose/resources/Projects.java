@@ -76,8 +76,24 @@ public class Projects {
 
 
 	}
+	
+	//TODO: document
+	@PUT
+	@Path("{experimentId}/pull")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Stop pull(@PathParam("experimentId") String experimentId) throws ExecuteException, IOException {
 
+		// TODO: implement
+		// Verify that the experimentId folder exists
 
+		// Call the DockerCompose wrapper to run the stop method
+		java.nio.file.Path projectFolder = Paths.get(this.projectFolder.toString(), experimentId);
+		DockerComposeWrapper dockerCompose = new DockerComposeWrapper(this.dockerConf);
+		dockerCompose.pull(projectFolder.toString(), experimentId);
+
+		return null;
+	}
+		
 	/**
 	 * Deploys a multi-container application described in a docker-compose.yml and in a benchflow-compose.yml
 	 * 
@@ -97,6 +113,10 @@ public class Projects {
 		
 		//TODO: enable also benchflow-compose, for now I'm testing using what the output of the benchflow-compose abstraction should be
 		//should be on the docker-compose.yml file
+		
+		//TODO: do only if necessarily
+		//Pull the latest version of the images described in the docker compose file (if the image it is already at the lastest version, it will only do a check)
+		pull(experimentId);
 		
 		//Call the DockerCompose wrapper to run the up method
 		java.nio.file.Path projectFolder = Paths.get(this.projectFolder.toString(),experimentId);
