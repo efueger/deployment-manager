@@ -38,7 +38,7 @@ public class DockerComposeWrapper {
 		// build the docker-compose command line
 		CommandLine cmdLine = new CommandLine(dockerComposeExec.toString());
 
-		// cmdLine.addArgument("--verbose"); //TODO: testing, remove
+		cmdLine.addArgument("--verbose"); //TODO: testing, remove
 		cmdLine.addArgument("pull");
 
 		// build the env variables map we want to pass to docker-compose
@@ -66,8 +66,8 @@ public class DockerComposeWrapper {
 		executor.setStreamHandler(handler);
 		// executor.setExitValue(0); //The process always exit with 0
 
-		// kills a run-away process after sixty seconds.
-		ExecuteWatchdog watchdog = new ExecuteWatchdog(60000);
+		// kills a run-away process after 10 minutes (the pull can be a long process, dependending on the netwrok connection of the SUT servers).
+		ExecuteWatchdog watchdog = new ExecuteWatchdog(600000);
 
 		executor.setWatchdog(watchdog);
 
