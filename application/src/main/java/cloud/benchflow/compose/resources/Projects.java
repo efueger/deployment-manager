@@ -130,54 +130,55 @@ public class Projects {
 	//TODO: add the run command API
 	
 	//TODO: document
+	//Call the DockerCompose wrapper to run the stop method
 	@PUT
 	@Path("{experimentId}/stop") 
 	@Produces(MediaType.APPLICATION_JSON)
 	public Stop stop(@PathParam("experimentId") String experimentId) throws ExecuteException, IOException {
 
-		//TODO: implement
-		//Verify that the experimentId folder exists
-
-		//Call the DockerCompose wrapper to run the stop method
 		java.nio.file.Path projectFolder = Paths.get(this.projectFolder.toString(),experimentId);
-		DockerComposeWrapper dockerCompose = new DockerComposeWrapper(this.dockerConf);
-		dockerCompose.stop(projectFolder.toString(),experimentId);
-
+		
+		//Verify that the experimentId folder exists
+		if(Files.exists(projectFolder)){
+			DockerComposeWrapper dockerCompose = new DockerComposeWrapper(this.dockerConf);
+			dockerCompose.stop(projectFolder.toString(),experimentId);
+		}
 		return null;
 	}
 	
 	//TODO: document
+	//Call the DockerCompose wrapper to run the rm method
 	@PUT
 	@Path("{experimentId}/rm") 
 	@Produces(MediaType.APPLICATION_JSON)
 	public Rm rm(@PathParam("experimentId") String experimentId) throws ExecuteException, IOException {
 		
-		//TODO: implement
-		//Verify that the experimentId folder exists
-
-		//Call the DockerCompose wrapper to run the rm method
-		
 		//The services have to be stopped before removal
 		stop(experimentId);
 		
 		java.nio.file.Path projectFolder = Paths.get(this.projectFolder,experimentId);
-		DockerComposeWrapper dockerCompose = new DockerComposeWrapper(this.dockerConf);
-		dockerCompose.rm(projectFolder.toString(),experimentId);
-
-		//remove projectFolder
-		Files.walkFileTree(projectFolder, new SimpleFileVisitor<java.nio.file.Path>() {
-			@Override
-			public FileVisitResult visitFile(java.nio.file.Path file, BasicFileAttributes attrs) throws IOException {
-				Files.delete(file);
-				return FileVisitResult.CONTINUE;
-			}
-
-			@Override
-			public FileVisitResult postVisitDirectory(java.nio.file.Path dir, IOException exc) throws IOException {
-				Files.delete(dir);
-				return FileVisitResult.CONTINUE;
-			}
-		});
+		
+		//Verify that the experimentId folder exists
+		if(Files.exists(projectFolder)){
+			
+			DockerComposeWrapper dockerCompose = new DockerComposeWrapper(this.dockerConf);
+			dockerCompose.rm(projectFolder.toString(),experimentId);
+	
+			//remove projectFolder
+			Files.walkFileTree(projectFolder, new SimpleFileVisitor<java.nio.file.Path>() {
+				@Override
+				public FileVisitResult visitFile(java.nio.file.Path file, BasicFileAttributes attrs) throws IOException {
+					Files.delete(file);
+					return FileVisitResult.CONTINUE;
+				}
+	
+				@Override
+				public FileVisitResult postVisitDirectory(java.nio.file.Path dir, IOException exc) throws IOException {
+					Files.delete(dir);
+					return FileVisitResult.CONTINUE;
+				}
+			});
+		}
 
 		return null;
 	}

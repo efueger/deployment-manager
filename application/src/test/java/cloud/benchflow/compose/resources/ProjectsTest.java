@@ -2,6 +2,7 @@ package cloud.benchflow.compose.resources;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.commons.exec.ExecuteException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,4 +50,24 @@ public class ProjectsTest {
 
 	}
 
+	
+	@Test
+	public void testRm() throws ExecuteException, IOException {
+		
+		String experimentId = "wordpress";
+		
+		project.rm(experimentId);
+
+	}
+	
+	@Test
+	public void testRmSameResourceTwice() throws ExecuteException, IOException {
+		
+		String experimentId = "wordpress";
+		
+		project.rm(experimentId);
+		
+		project.rm(experimentId);
+
+	}
 }
