@@ -45,14 +45,13 @@ public class Projects {
 	}
 
 	/**
-	 * Save a deployment descriptor of a multi-container application described in a docker-compose.yml and in a benchflow-compose.yml
+	 * Save a deployment descriptor of a multi-container application described in a docker-compose.yml
 	 * 
 	 * 
 	 * @param experimentId
 	 *     
 	 * @param entity
 	 *     docker_compose_file:  - docker-compose.yml file<br/>
-	 *     benchflow_compose_file:  - benchflow-compose.yml file<br/>
 	 *     
 	 */
 	@PUT
@@ -60,8 +59,7 @@ public class Projects {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 	public void deploymentDescriptor(@PathParam("experimentId") String experimentId, 
-			@FormDataParam("docker_compose_file") final InputStream dockerComposeStream,  
-			@FormDataParam("benchflow_compose_file") final InputStream benchflowComposeStream) {
+			@FormDataParam("docker_compose_file") final InputStream dockerComposeStream) {
 
 		//TODO: validate files
 
@@ -70,10 +68,6 @@ public class Projects {
 
 		//Save files in the experimentId folder
 		saveFileFromInputStream(experimentId, dockerComposeStream, "docker-compose.yml");
-		saveFileFromInputStream(experimentId, benchflowComposeStream, "benchflow-compose.yml");
-		
-		//TODO: Generate the transformed docker-compose.yml by using the abstractions offered by benchflow-compose
-
 
 	}
 	
@@ -95,7 +89,7 @@ public class Projects {
 	}
 		
 	/**
-	 * Deploys a multi-container application described in a docker-compose.yml and in a benchflow-compose.yml
+	 * Deploys a multi-container application described in a docker-compose.yml
 	 * 
 	 * 
 	 * @param projectnameid
@@ -110,10 +104,7 @@ public class Projects {
 		
 		//TODO: implement
 		//Verify that the experimentId folder exists
-		
-		//TODO: enable also benchflow-compose, for now I'm testing using what the output of the benchflow-compose abstraction should be
-		//should be on the docker-compose.yml file
-		
+
 		//TODO: do only if necessarily
 		//Pull the latest version of the images described in the docker compose file (if the image it is already at the lastest version, it will only do a check)
 		pull(experimentId);

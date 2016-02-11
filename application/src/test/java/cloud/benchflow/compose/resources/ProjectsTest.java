@@ -44,9 +44,8 @@ public class ProjectsTest {
 		String experimentId = "wordpress";
 		
 		InputStream dockerCompose = getClass().getResourceAsStream(sourceFolder + "/docker-compose.yml");
-		InputStream benchflowCompose = getClass().getResourceAsStream(sourceFolder + "/benchflow-compose.yml");
 
-		project.deploymentDescriptor(experimentId, dockerCompose, benchflowCompose);
+		project.deploymentDescriptor(experimentId, dockerCompose);
 
 	}
 

@@ -14,9 +14,8 @@ public class DockerComposeUtils {
 		Projects project = new Projects(destFolder, configuration);
 		
 		InputStream dockerCompose = DockerComposeUtils.class.getResourceAsStream(sourceFolder + "/docker-compose.yml");
-		InputStream benchflowCompose = DockerComposeUtils.class.getResourceAsStream(sourceFolder + "/benchflow-compose.yml");
 
-		project.deploymentDescriptor(experimentId, dockerCompose, benchflowCompose);
+		project.deploymentDescriptor(experimentId, dockerCompose);
 	
 	}
 
