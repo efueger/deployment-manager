@@ -168,7 +168,8 @@ public class Projects {
 		return null;
 	}
 
-	@Path("{experimentId}/{serviceName}/{privatePort}")
+    @GET
+	@Path("{experimentId}/port/{serviceName}/{privatePort}")
 	public String port(@PathParam("experimentId") String experimentId,
 					   @PathParam("serviceName") String serviceName,
 					   @PathParam("privatePort") int privatePort) {
