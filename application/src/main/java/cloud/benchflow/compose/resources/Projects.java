@@ -10,11 +10,7 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.exec.ExecuteException;
@@ -49,9 +45,7 @@ public class Projects {
 	 * 
 	 * 
 	 * @param experimentId
-	 *     
-	 * @param entity
-	 *     docker_compose_file:  - docker-compose.yml file<br/>
+	 *
 	 *     
 	 */
 	@PUT
@@ -81,7 +75,7 @@ public class Projects {
 		// Verify that the experimentId folder exists
 
 		// Call the DockerCompose wrapper to run the stop method
-		java.nio.file.Path projectFolder = Paths.get(this.projectFolder.toString(), experimentId);
+		java.nio.file.Path projectFolder = Paths.get(this.projectFolder, experimentId);
 		DockerComposeWrapper dockerCompose = new DockerComposeWrapper(this.dockerConf);
 		dockerCompose.pull(projectFolder.toString(), experimentId);
 
@@ -92,7 +86,7 @@ public class Projects {
 	 * Deploys a multi-container application described in a docker-compose.yml
 	 * 
 	 * 
-	 * @param projectnameid
+	 * @param experimentId
 	 * @throws IOException 
 	 * @throws ExecuteException 
 	 *     
@@ -110,7 +104,7 @@ public class Projects {
 		pull(experimentId);
 		
 		//Call the DockerCompose wrapper to run the up method
-		java.nio.file.Path projectFolder = Paths.get(this.projectFolder.toString(),experimentId);
+		java.nio.file.Path projectFolder = Paths.get(this.projectFolder,experimentId);
 		DockerComposeWrapper dockerCompose = new DockerComposeWrapper(this.dockerConf);
 		dockerCompose.up(projectFolder.toString(),experimentId);
 
@@ -127,7 +121,7 @@ public class Projects {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Stop stop(@PathParam("experimentId") String experimentId) throws ExecuteException, IOException {
 
-		java.nio.file.Path projectFolder = Paths.get(this.projectFolder.toString(),experimentId);
+		java.nio.file.Path projectFolder = Paths.get(this.projectFolder,experimentId);
 		
 		//Verify that the experimentId folder exists
 		if(Files.exists(projectFolder)){
@@ -172,6 +166,22 @@ public class Projects {
 		}
 
 		return null;
+	}
+
+    @GET
+	@Path("{experimentId}/port/{serviceName}/{privatePort}")
+	public String port(@PathParam("experimentId") String experimentId,
+					   @PathParam("serviceName") String serviceName,
+					   @PathParam("privatePort") int privatePort) {
+		java.nio.file.Path projectFolder = Paths.get(this.projectFolder,experimentId);
+		if(Files.exists(projectFolder)){
+
+			DockerComposeWrapper dockerCompose = new DockerComposeWrapper(this.dockerConf);
+			return dockerCompose.port(projectFolder.toString(), experimentId, serviceName, privatePort);
+
+		}
+		//TODO: throw more informative exception
+		throw new WebApplicationException(experimentId + " does not exist.");
 	}
 
 	/**
