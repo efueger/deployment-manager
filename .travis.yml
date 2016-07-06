@@ -1,5 +1,5 @@
 sudo: required
-dist: precise
+dist: trusty
 group: edge
 
 language: java
@@ -15,8 +15,11 @@ branches:
 
 
 install:
-  - mvn install
+  - make install
 
+script:
+  - make test
+  - make build_container
 
 cache:
   directories:

@@ -21,7 +21,10 @@ install:
 	JAVA_HOME=$(JAVA_HOME) mvn install
 
 test:
-	JAVA_HOME=$(JAVA_HOME) mvn test
+	JAVA_HOME=$(JAVA_HOME) mvn test -B
+
+build_container:
+	docker build -t $(DOCKERIMAGENAME):$(VERSION) -f Dockerfile .
 
 build_container_local:
 	JAVA_HOME=$(JAVA_HOME) mvn package
