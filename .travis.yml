@@ -10,7 +10,6 @@ addons:
   apt:
     packages:
       - oracle-java8-installer
-      - update-java-alternatives
 
 # whitelist
 branches:
@@ -19,6 +18,8 @@ branches:
   except:
     - v-dev
 
+before_install:
+  - jdk_switcher use oraclejdk8
 
 install:
   - make install
