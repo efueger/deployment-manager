@@ -2,7 +2,13 @@ REPONAME = compose
 DOCKERIMAGENAME = benchflow/$(REPONAME)
 VERSION = dev
 JAVA_VERSION_FOR_COMPILATION = java-8-oracle
+UNAME = $(shell uname)
 JAVA_HOME := `update-java-alternatives -l | cut -d' ' -f3 | grep $(JAVA_VERSION_FOR_COMPILATION)`"/jre"
+
+find_java:
+ifeq ($(UNAME), Darwin)
+	$(eval JAVA_HOME := $(shell /usr/libexec/java_home))
+endif
 
 .PHONY: all build_release 
 
@@ -11,22 +17,22 @@ all: build_release
 clean:
 	mvn clean
 
-build:
+build: find_java
 	JAVA_HOME=$(JAVA_HOME) mvn package
 
-build_release:
+build_release: find_java
 	JAVA_HOME=$(JAVA_HOME) mvn install
 
-install:
+install: find_java
 	JAVA_HOME=$(JAVA_HOME) mvn install
 
-test:
+test: find_java
 	JAVA_HOME=$(JAVA_HOME) mvn test -B
 
 build_container:
 	docker build -t $(DOCKERIMAGENAME):$(VERSION) -f Dockerfile .
 
-build_container_local:
+build_container_local: find_java
 	JAVA_HOME=$(JAVA_HOME) mvn package
 	docker build -t $(DOCKERIMAGENAME):$(VERSION) -f Dockerfile.test .
 	rm target/benchflow-$(REPONAME).jar
