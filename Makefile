@@ -1,9 +1,9 @@
 REPONAME = compose
 DOCKERIMAGENAME = benchflow/$(REPONAME)
 VERSION = dev
-JAVA_VERSION_FOR_COMPILATION = java-8-oracle
+JAVA_VERSION_FOR_COMPILATION = (^|/)java-8-oracle($|\s)
 UNAME = $(shell uname)
-JAVA_HOME := `update-java-alternatives -l | cut -d' ' -f3 | grep $(JAVA_VERSION_FOR_COMPILATION)`
+JAVA_HOME := `update-java-alternatives -l | cut -d' ' -f3 | grep -E '$(JAVA_VERSION_FOR_COMPILATION)'`
 
 find_java:
 ifeq ($(UNAME), Darwin)
