@@ -19,7 +19,13 @@ branches:
     - v-dev
 
 before_install:
-  - jdk_switcher use oraclejdk8
+  # Attempt to fix: https://github.com/travis-ci/travis-ci/issues/5545
+  # reference: http://stevenschwenke.de/cannotFindSymbolInTravisAndShippable
+  - export JAVA_HOME="/usr/lib/jvm/java-8-oracle"
+  - export PATH="$PATH:/usr/lib/jvm/java-8-oracle/bin"
+  - export java_path="/usr/lib/jvm/java-8-oracle/jre/bin/java"
+  - update-alternatives --set java $java_path
+  - java -version
 
 install:
   - make install
