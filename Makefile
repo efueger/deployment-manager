@@ -24,7 +24,7 @@ build_release: find_java
 	JAVA_HOME=$(JAVA_HOME) mvn install
 
 install: find_java
-	update-java-alternatives -l 
+	update-java-alternatives -l | cut -d' ' -f3 | grep -E '$(JAVA_VERSION_FOR_COMPILATION)'
 	JAVA_HOME=$(JAVA_HOME) mvn install
 
 test: find_java
