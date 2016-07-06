@@ -25,7 +25,7 @@ build_release: find_java
 
 install: find_java
 	update-java-alternatives -l | cut -d' ' -f3
-	grep -E '$(JAVA_VERSION_FOR_COMPILATION)'
+	echo "/usr/lib/jvm/java-8-oracle" | grep -E '$(JAVA_VERSION_FOR_COMPILATION)'
 	update-java-alternatives -l | cut -d' ' -f3 | grep -E '$(JAVA_VERSION_FOR_COMPILATION)'
 	JAVA_HOME=$(JAVA_HOME) mvn install
 
