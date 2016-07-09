@@ -2,7 +2,7 @@ FROM benchflow/base-images:dns-java8_dev
 
 MAINTAINER Vincenzo FERME <info@vincenzoferme.it>
 
-ENV DOCKER_COMPOSE_VERSION 1.5.2
+ENV DOCKER_COMPOSE_VERSION 1.8.0-rc2
 ENV BENCHFLOW_COMPOSE_VERSION v-dev
 
 #Install docker-compose
@@ -17,7 +17,7 @@ RUN apk del --purge curl && \
 
 COPY configuration.yml /app/
 
-COPY ./target/benchflow-compose.jar /app/
-COPY ./services/300-compose.conf /apps/chaperone.d/300-compose.conf
+COPY ./target/benchflow-deployment-manager.jar /app/
+COPY ./services/300-deployment-manager.conf /apps/chaperone.d/300-deployment-manager.conf
  
 EXPOSE 8080

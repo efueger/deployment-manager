@@ -1,0 +1,29 @@
+#%RAML 0.8
+title: "#See: benchflow-deployment-manager.raml"
+baseUri: "#See: benchflow-deployment-manager.raml"
+/projects/{experimentId}/rm: 
+  put: 
+    responses: 
+      200: 
+        body: 
+          application/json: 
+/projects/{experimentId}/stop: 
+  put: 
+    responses: 
+      200: 
+        body: 
+          application/json: 
+/projects/{experimentId}/up: 
+  put: 
+    responses: 
+      200: 
+        body: 
+          application/json: 
+/projects/{experimentId}/deploymentDescriptor: 
+  put: 
+    body: 
+      multipart/form-data: 
+    responses: 
+      200: 
+        body: 
+          application/json: 

@@ -1,0 +1,12 @@
+#NOTE: this is a draft
+#%RAML 0.8
+---
+title: benchflow-deployment-manager API
+version: v1
+protocols: [ HTTP ]
+mediaType: application/json
+baseUri: http://{ip}/{version}
+baseUriParameters:
+ ip:
+   displayName: Service IP
+   type: string

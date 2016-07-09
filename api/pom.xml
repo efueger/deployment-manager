@@ -2,9 +2,9 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>cloud.benchflow</groupId>
-    <artifactId>compose</artifactId>
+    <artifactId>deployment-manager</artifactId>
     <version>0.0.1</version>
   </parent>
-  <groupId>cloud.benchflow.compose</groupId>
+  <groupId>cloud.benchflow.deploymentmanager</groupId>
   <artifactId>api</artifactId>
 </project>
