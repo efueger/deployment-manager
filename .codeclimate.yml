@@ -1,7 +1,7 @@
 engines:
   checkstyle:
     enabled: true
-      channel: "beta"
+    channel: "beta"
   scalastyle:
     enabled: true
   markdownlint:
